@@ -1,6 +1,6 @@
 const Rating = ({ rating, numReviews, color }) => {
   return (
-    <div>
+    <div className="my-2">
       <span>
         <i
           style={{ color }}
