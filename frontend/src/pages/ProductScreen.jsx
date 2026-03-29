@@ -12,6 +12,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Rating from "../components/Rating";
 import { useEffect, useState } from "react";
 import { listProductDetails } from "../actions/productActions";
+import { addToCart } from "../actions/cartActions";
 
 const ProductScreen = () => {
   const { id } = useParams();
@@ -27,6 +28,7 @@ const ProductScreen = () => {
   }, [dispatch, id]);
 
   const addToCartHandler = () => {
+    dispatch(addToCart(id, qty));
     navigate("/cart");
   };
 
