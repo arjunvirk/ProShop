@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   Button,
   Card,
@@ -9,11 +8,12 @@ import {
   Row,
 } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addToCart, removeFromCart } from "../actions/cartActions";
 
 const CartScreen = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
@@ -22,7 +22,9 @@ const CartScreen = () => {
     dispatch(removeFromCart(id));
   };
 
-  const checkoutHandler = () => {};
+  const checkoutHandler = () => {
+    navigate("/login?redirect=shipping");
+  };
 
   return (
     <Row>
@@ -85,7 +87,8 @@ const CartScreen = () => {
           <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>
-                SUBTOTAL ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
+                SUBTOTAL (
+                {cartItems.reduce((acc, item) => acc + Number(item.qty), 0)})
                 ITEMS
               </h2>
               $
