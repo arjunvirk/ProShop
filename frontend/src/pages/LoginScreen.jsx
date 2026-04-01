@@ -1,7 +1,7 @@
 import { Row, Col, Form, Button, Container } from "react-bootstrap";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../actions/userActions";
@@ -64,6 +64,15 @@ const LoginScreen = () => {
               SIGN IN
             </Button>
           </Form>
+        </Col>
+      </Row>
+      <Row className="py-3">
+        <Col className="text-center">
+          New customer?
+          <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
+            {" "}
+            Register
+          </Link>
         </Col>
       </Row>
     </Container>
