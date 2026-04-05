@@ -11,6 +11,8 @@ import ProfileScreen from "./pages/ProfileScreen";
 import ShippingScreen from "./pages/ShippingScreen";
 import PaymentScreen from "./pages/PaymentScreen";
 import PlaceorderScreen from "./pages/PlaceorderScreen";
+import OrderScreen from "./pages/OrderScreen";
+import UserListScreen from "./pages/UserListScreen";
 
 const App = () => {
   return (
@@ -28,6 +30,8 @@ const App = () => {
             <Route path="/shipping" element={<ShippingScreen />} />
             <Route path="/payment" element={<PaymentScreen />} />
             <Route path="/placeorder" element={<PlaceorderScreen />} />
+            <Route path="/order/:id" element={<OrderScreen />} />
+            <Route path="/admin/userlist" element={<UserListScreen />} />
           </Routes>
         </main>
       </Container>

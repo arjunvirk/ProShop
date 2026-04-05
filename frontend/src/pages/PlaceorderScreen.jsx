@@ -9,25 +9,50 @@ import {
 } from "react-bootstrap";
 import Message from "../components/Message";
 import CheckoutSteps from "../components/CheckoutSteps";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { createOrder } from "../actions/orderActions";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const PlaceorderScreen = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const cart = useSelector((state) => state.cart);
 
-  const itemsPrice = cart.cartItems.reduce(
-    (acc, item) => acc + item.price * item.qty,
-    0,
+  const itemsPrice = Number(
+    cart.cartItems
+      .reduce((acc, item) => acc + item.price * item.qty, 0)
+      .toFixed(2),
   );
 
   const shippingPrice = itemsPrice > 100 ? 0 : 100;
 
   const taxPrice = Number((0.15 * itemsPrice).toFixed(2));
 
-  const totalPrice = itemsPrice + shippingPrice + taxPrice;
+  const totalPrice = Number((itemsPrice + shippingPrice + taxPrice).toFixed(2));
+
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { order, success, error } = orderCreate;
+
+  useEffect(() => {
+    if (success) {
+      navigate(`/order/${order._id}`);
+    }
+  }, [navigate, success]);
 
   const placeOrderHandler = () => {
-    console.log("order");
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        itemsPrice,
+        shippingPrice,
+        taxPrice,
+        totalPrice,
+      }),
+    );
   };
   return (
     <>
@@ -110,10 +135,13 @@ const PlaceorderScreen = () => {
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
+                {error && <Message variant="danger">{error}</Message>}
+              </ListGroup.Item>
+              <ListGroup.Item>
                 <Button
                   type="button"
                   variant="dark"
-                  disabled={cart.cartItems === 0}
+                  disabled={cart.cartItems.length === 0}
                   onClick={placeOrderHandler}
                   className="w-100"
                 >
