@@ -21,6 +21,9 @@ import {
   USER_DELETE_REQUEST,
   USER_DELETE_SUCCESS,
   USER_DELETE_FAIL,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_FAIL,
 } from "../constants/userConstants";
 
 import { ORDER_LIST_MY_RESET } from "../constants/orderConstants";
@@ -106,7 +109,37 @@ export const register = (name, email, password) => async (dispatch) => {
   }
 };
 
-export const getUserDetails = () => async (dispatch) => {
+export const getUserDetails = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_DETAILS_REQUEST });
+
+    const res = await fetch(
+      `http://localhost:8080/api/users/${id}`, // ✅ THIS LINE
+      {
+        method: "GET",
+        credentials: "include",
+      },
+    );
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || "Failed to fetch user details");
+    }
+
+    dispatch({
+      type: USER_DETAILS_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_DETAILS_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const getUserProfile = () => async (dispatch) => {
   try {
     dispatch({ type: USER_DETAILS_REQUEST });
 
@@ -118,7 +151,7 @@ export const getUserDetails = () => async (dispatch) => {
     const data = await res.json();
 
     if (!res.ok) {
-      throw new Error(data.message || "Failed to fetch user details");
+      throw new Error(data.message || "Failed to fetch profile");
     }
 
     dispatch({
@@ -225,6 +258,39 @@ export const deleteUser = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: USER_DELETE_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const updateUser = (id, user) => async (dispatch) => {
+  try {
+    dispatch({ type: USER_UPDATE_REQUEST });
+
+    const res = await fetch(`http://localhost:8080/api/users/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(user),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || "Failed to update user");
+    }
+
+    dispatch({
+      type: USER_UPDATE_SUCCESS,
+      payload: data,
+    });
+
+    dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: USER_UPDATE_FAIL,
       payload: error.message,
     });
   }

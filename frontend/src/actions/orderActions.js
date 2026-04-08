@@ -11,6 +11,12 @@ import {
   ORDER_LIST_MY_REQUEST,
   ORDER_LIST_MY_SUCCESS,
   ORDER_LIST_MY_FAIL,
+  ORDER_LIST_REQUEST,
+  ORDER_LIST_SUCCESS,
+  ORDER_LIST_FAIL,
+  ORDER_DELIVER_REQUEST,
+  ORDER_DELIVER_SUCCESS,
+  ORDER_DELIVER_FAIL,
 } from "../constants/orderConstants";
 
 export const createOrder = (order) => async (dispatch) => {
@@ -124,6 +130,66 @@ export const listMyOrders = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ORDER_LIST_MY_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const listOrders = () => async (dispatch) => {
+  try {
+    dispatch({ type: ORDER_LIST_REQUEST });
+
+    const res = await fetch(`http://localhost:8080/api/orders`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || "Failed to fetch orders");
+    }
+
+    dispatch({
+      type: ORDER_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ORDER_LIST_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const deliverOrder = (orderId) => async (dispatch) => {
+  try {
+    dispatch({ type: ORDER_DELIVER_REQUEST });
+
+    const res = await fetch(
+      `http://localhost:8080/api/orders/${orderId}/deliver`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      },
+    );
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || "Failed to deliver order");
+    }
+
+    dispatch({
+      type: ORDER_DELIVER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ORDER_DELIVER_FAIL,
       payload: error.message,
     });
   }

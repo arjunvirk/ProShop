@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { getUserDetails, updateUserProfile } from "../actions/userActions";
+import { getUserProfile, updateUserProfile } from "../actions/userActions";
 import { listMyOrders } from "../actions/orderActions";
 import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 
@@ -46,7 +46,7 @@ const ProfileScreen = () => {
       }
 
       if (!user || !user.name) {
-        dispatch(getUserDetails());
+        dispatch(getUserProfile());
         dispatch(listMyOrders());
       } else {
         setName(user.name);
@@ -164,7 +164,9 @@ const ProfileScreen = () => {
                     </td>
                     <td>
                       <LinkContainer to={`/order/${order._id}`}>
-                        <Button variant="dark" className="btn-sm">Details</Button>
+                        <Button variant="dark" className="btn-sm">
+                          Details
+                        </Button>
                       </LinkContainer>
                     </td>
                   </tr>
