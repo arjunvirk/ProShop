@@ -1,27 +1,42 @@
-# ProShop 🛒
+# 🛒 ProShop
 
 A full-stack MERN eCommerce application.
 
 🚀 **Live Demo:** https://proshop-production-0df9.up.railway.app/
 
-## 🚀 Features
-- User authentication (JWT)
-- Product listing & search
-- Cart functionality
-- Order management
-- PayPal payment integration
-- Admin panel
+---
+
+## ✨ Features
+
+### 👤 User
+- Register & login (JWT authentication)
+- Browse products with search & pagination
+- Add to cart & manage cart
+- Place orders & view order history
+- Pay using PayPal
+
+### 🔧 Admin
+- Manage products (create, update, delete)
+- Manage users
+- View and update orders (mark as delivered)
+
+---
 
 ## 🛠 Tech Stack
-- Frontend: React (Vite)
-- Backend: Node.js, Express
-- Database: MongoDB
-- Styling: React-Bootstrap & custom CSS
+
+- **Frontend:** React (Vite), Redux, React-Bootstrap  
+- **Backend:** Node.js, Express  
+- **Database:** MongoDB  
+- **Auth:** JWT  
+- **Payments:** PayPal API  
+- **Deployment:** Railway  
+
+---
 
 ## ⚙️ Installation
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/arjunvirk/ProShop
 cd proshop
 npm install
 cd frontend
