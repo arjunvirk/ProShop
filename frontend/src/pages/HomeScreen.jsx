@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import Product from "../components/Product";
 import { listProducts } from "../actions/productActions";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Paginate from "../components/Paginate";
 import ProductCarousel from "../components/ProductCarousel";
+import Meta from "../components/Meta";
 
 const HomeScreen = () => {
   const { keyword = "", pageNumber = 1 } = useParams();
@@ -21,8 +22,17 @@ const HomeScreen = () => {
 
   return (
     <section className="fade-in">
-      {!keyword && <ProductCarousel />}
-      <h1 className="section-title mt-2 mt-md-3 mb-3 mb-md-4">LATEST PRODUCTS</h1>
+      <Meta />
+      {!keyword ? (
+        <ProductCarousel />
+      ) : (
+        <Link to="/" className="btn btn-dark">
+          Go Back
+        </Link>
+      )}
+      <h1 className="section-title mt-2 mt-md-3 mb-3 mb-md-4">
+        LATEST PRODUCTS
+      </h1>
 
       {loading ? (
         <h2>Loading...</h2>

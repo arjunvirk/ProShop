@@ -18,6 +18,7 @@ import {
 import { addToCart } from "../actions/cartActions";
 import { PRODUCT_CREATE_REVIEW_RESET } from "../constants/productConstants";
 import Message from "../components/Message";
+import Meta from "../components/Meta";
 
 const ProductScreen = () => {
   const { id } = useParams();
@@ -72,9 +73,14 @@ const ProductScreen = () => {
         <h3>{error}</h3>
       ) : (
         <>
+          <Meta title={product.name} />
           <Row className="g-4">
             <Col md={6}>
-              <Image src={product?.image} fluid className="rounded-4 shadow-sm" />
+              <Image
+                src={product?.image}
+                fluid
+                className="rounded-4 shadow-sm"
+              />
             </Col>
 
             <Col md={3}>
@@ -207,7 +213,11 @@ const ProductScreen = () => {
                         />
                       </Form.Group>
 
-                      <Button type="submit" variant="dark" className="mt-2 rounded-pill px-4">
+                      <Button
+                        type="submit"
+                        variant="dark"
+                        className="mt-2 rounded-pill px-4"
+                      >
                         Submit
                       </Button>
                     </Form>
