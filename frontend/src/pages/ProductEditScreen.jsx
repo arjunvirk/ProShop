@@ -31,7 +31,6 @@ const ProductEditScreen = () => {
     success: successUpdate,
   } = productUpdate;
 
-  // 🔥 Fetch product + handle update success
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
@@ -64,7 +63,7 @@ const ProductEditScreen = () => {
         body: formData,
       });
       const data = await res.json();
-      setImage(data.image); // 🔥 VERY IMPORTANT
+      setImage(data.image);
       setUploading(false);
     } catch (error) {
       console.error(error);

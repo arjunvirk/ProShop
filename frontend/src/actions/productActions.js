@@ -29,7 +29,7 @@ export const listProducts =
       dispatch({ type: PRODUCT_LIST_REQUEST });
 
       const res = await fetch(
-        `http://localhost:8080/api/products?keyword=${keyword}&pageNumber=${pageNumber}`,
+        `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`,
       );
 
       if (!res.ok) {
@@ -55,7 +55,7 @@ export const listTopProducts = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_TOP_REQUEST });
 
-    const res = await fetch(`http://localhost:8080/api/products/top`);
+    const res = await fetch(`/api/products/top`);
 
     if (!res.ok) {
       const err = await res.json();
@@ -82,7 +82,7 @@ export const listProductDetails = (id) => async (dispatch) => {
       type: PRODUCT_DETAILS_REQUEST,
     });
 
-    const res = await fetch(`http://localhost:8080/api/products/${id}`);
+    const res = await fetch(`/api/products/${id}`);
 
     if (!res.ok) {
       const err = await res.json();
@@ -107,7 +107,7 @@ export const deleteProduct = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DELETE_REQUEST });
 
-    const res = await fetch(`http://localhost:8080/api/products/${id}`, {
+    const res = await fetch(`/api/products/${id}`, {
       method: "DELETE",
       credentials: "include",
     });
@@ -133,7 +133,7 @@ export const createProduct = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_CREATE_REQUEST });
 
-    const res = await fetch(`http://localhost:8080/api/products`, {
+    const res = await fetch(`/api/products`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -164,7 +164,7 @@ export const updateProduct = (product) => async (dispatch) => {
     dispatch({ type: PRODUCT_UPDATE_REQUEST });
 
     const res = await fetch(
-      `http://localhost:8080/api/products/${product._id}`,
+      `/api/products/${product._id}`,
       {
         method: "PUT",
         headers: {
@@ -203,7 +203,7 @@ export const createProductReview = (productId, review) => async (dispatch) => {
     dispatch({ type: PRODUCT_CREATE_REVIEW_REQUEST });
 
     const res = await fetch(
-      `http://localhost:8080/api/products/${productId}/reviews`,
+      `/api/products/${productId}/reviews`,
       {
         method: "POST",
         headers: {

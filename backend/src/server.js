@@ -14,15 +14,17 @@ import {
   notFoundMiddleware,
 } from "./middlewares/errorMiddlewares.js";
 
-const app = express();
-
 dotenv.config();
+const app = express();
 
 connectDB();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin:
+      process.env.NODE_ENV === "production"
+        ? false // same origin (no CORS needed)
+        : "http://localhost:5173",
     credentials: true,
   }),
 );
@@ -46,10 +48,18 @@ app.get("/api/config/paypal", (req, res) => {
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+  app.use((req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+  });
+}
+
 app.use(notFoundMiddleware);
 app.use(errorMessageMiddleware);
 
-let PORT = process.env.PORT;
+let PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`server running on port: ${PORT}`);
 });

@@ -7,7 +7,7 @@ import {
 
 export const addToCart = (id, qty) => async (dispatch, getState) => {
   try {
-    const res = await fetch(`http://localhost:8080/api/products/${id}`);
+    const res = await fetch(`/api/products/${id}`);
 
     if (!res.ok) {
       const err = await res.json();

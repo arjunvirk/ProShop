@@ -32,7 +32,7 @@ export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: USER_LOGIN_REQUEST });
 
-    const res = await fetch("http://localhost:8080/api/users/login", {
+    const res = await fetch("/api/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -75,7 +75,7 @@ export const register = (name, email, password) => async (dispatch) => {
   try {
     dispatch({ type: USER_REGISTER_REQUEST });
 
-    const res = await fetch("http://localhost:8080/api/users", {
+    const res = await fetch("/api/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -114,7 +114,7 @@ export const getUserDetails = (id) => async (dispatch) => {
     dispatch({ type: USER_DETAILS_REQUEST });
 
     const res = await fetch(
-      `http://localhost:8080/api/users/${id}`, // ✅ THIS LINE
+      `/api/users/${id}`,
       {
         method: "GET",
         credentials: "include",
@@ -143,7 +143,7 @@ export const getUserProfile = () => async (dispatch) => {
   try {
     dispatch({ type: USER_DETAILS_REQUEST });
 
-    const res = await fetch("http://localhost:8080/api/users/profile", {
+    const res = await fetch("/api/users/profile", {
       method: "GET",
       credentials: "include",
     });
@@ -170,7 +170,7 @@ export const updateUserProfile = (user) => async (dispatch) => {
   try {
     dispatch({ type: USER_UPDATE_PROFILE_REQUEST });
 
-    const res = await fetch("http://localhost:8080/api/users/profile", {
+    const res = await fetch("/api/users/profile", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -213,7 +213,7 @@ export const listUsers = () => async (dispatch) => {
   try {
     dispatch({ type: USER_LIST_REQUEST });
 
-    const res = await fetch("http://localhost:8080/api/users", {
+    const res = await fetch("/api/users", {
       method: "GET",
       credentials: "include",
     });
@@ -240,7 +240,7 @@ export const deleteUser = (id) => async (dispatch) => {
   try {
     dispatch({ type: USER_DELETE_REQUEST });
 
-    const res = await fetch(`http://localhost:8080/api/users/${id}`, {
+    const res = await fetch(`/api/users/${id}`, {
       method: "DELETE",
       credentials: "include",
     });
@@ -267,7 +267,7 @@ export const updateUser = (id, user) => async (dispatch) => {
   try {
     dispatch({ type: USER_UPDATE_REQUEST });
 
-    const res = await fetch(`http://localhost:8080/api/users/${id}`, {
+    const res = await fetch(`/api/users/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

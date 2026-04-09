@@ -23,7 +23,7 @@ export const createOrder = (order) => async (dispatch) => {
   try {
     dispatch({ type: ORDER_CREATE_REQUEST });
 
-    const res = await fetch("http://localhost:8080/api/orders", {
+    const res = await fetch("/api/orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,7 +54,7 @@ export const getOrderDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: ORDER_DETAILS_REQUEST });
 
-    const res = await fetch(`http://localhost:8080/api/orders/${id}`, {
+    const res = await fetch(`/api/orders/${id}`, {
       method: "GET",
       credentials: "include",
     });
@@ -81,7 +81,7 @@ export const payOrder = (id, paymentResult) => async (dispatch) => {
   try {
     dispatch({ type: ORDER_PAY_REQUEST });
 
-    const res = await fetch(`http://localhost:8080/api/orders/${id}/pay`, {
+    const res = await fetch(`/api/orders/${id}/pay`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -112,7 +112,7 @@ export const listMyOrders = () => async (dispatch) => {
   try {
     dispatch({ type: ORDER_LIST_MY_REQUEST });
 
-    const res = await fetch(`http://localhost:8080/api/orders/myorders`, {
+    const res = await fetch(`/api/orders/myorders`, {
       method: "GET",
       credentials: "include",
     });
@@ -139,7 +139,7 @@ export const listOrders = () => async (dispatch) => {
   try {
     dispatch({ type: ORDER_LIST_REQUEST });
 
-    const res = await fetch(`http://localhost:8080/api/orders`, {
+    const res = await fetch(`/api/orders`, {
       method: "GET",
       credentials: "include",
     });
@@ -167,7 +167,7 @@ export const deliverOrder = (orderId) => async (dispatch) => {
     dispatch({ type: ORDER_DELIVER_REQUEST });
 
     const res = await fetch(
-      `http://localhost:8080/api/orders/${orderId}/deliver`,
+      `/api/orders/${orderId}/deliver`,
       {
         method: "PUT",
         headers: {
