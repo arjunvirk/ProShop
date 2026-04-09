@@ -2,15 +2,10 @@ import { Spinner } from "react-bootstrap";
 
 const Loader = () => {
   return (
-    <div
-      className="d-flex justify-content-center align-items-center"
-      style={{ height: "40vh" }}
-    >
-      <Spinner
-        animation="border"
-        role="status"
-        style={{ height: "80px", width: "80px" }}
-      />
+    <div className="text-center py-5">
+      <div className="spinner-grow text-primary mx-1"></div>
+      <div className="spinner-grow text-primary mx-1"></div>
+      <div className="spinner-grow text-primary mx-1"></div>
     </div>
   );
 };

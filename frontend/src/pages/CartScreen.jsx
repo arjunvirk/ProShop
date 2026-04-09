@@ -27,18 +27,21 @@ const CartScreen = () => {
   };
 
   return (
-    <Row>
+    <Row className="g-4 fade-in">
       <Col md={8}>
-        <h1 className="my-3">SHOPPING CART</h1>
+        <h1 className="section-title my-3">SHOPPING CART</h1>
         {cartItems.length === 0 ? (
           <h5>
             your cart is empty <Link to="/">Go Back</Link>
           </h5>
         ) : (
-          <ListGroup variant="flush">
+          <ListGroup
+            variant="flush"
+            className="rounded-4 overflow-hidden shadow-sm"
+          >
             {cartItems.map((item) => (
               <ListGroup.Item key={item.product}>
-                <Row>
+                <Row className="align-items-center">
                   <Col md={2}>
                     <Image src={item.image} alt={item.name} fluid />
                   </Col>
@@ -47,11 +50,14 @@ const CartScreen = () => {
                     <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </Col>
 
-                  <Col md={2}>${item.price}</Col>
+                  <Col md={2} className="fw-semibold text-primary">
+                    ${item.price}
+                  </Col>
 
-                  <Col md={2}>
+                  <Col xs={8} md={2}>
                     <Form.Control
                       as="select"
+                      size="sm"
                       value={item.qty}
                       onChange={(e) =>
                         dispatch(
@@ -67,10 +73,16 @@ const CartScreen = () => {
                     </Form.Control>
                   </Col>
 
-                  <Col md={2}>
+                  <Col
+                    xs={4}
+                    md={2}
+                    className="d-flex align-items-center justify-content-end"
+                  >
                     <Button
                       type="button"
                       variant="light"
+                      size="sm"
+                      className="rounded-circle"
                       onClick={() => removeFromCartHandler(item.product)}
                     >
                       <i className="fas fa-trash"></i>
@@ -83,7 +95,7 @@ const CartScreen = () => {
         )}
       </Col>
       <Col md={4}>
-        <Card className="my-3">
+        <Card className="my-3 border-0 rounded-4 shadow-sm">
           <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>
@@ -99,7 +111,7 @@ const CartScreen = () => {
             <ListGroup.Item>
               <Button
                 type="button"
-                className="btn btn-dark w-100 rounded-0"
+                className="btn-dark w-100 rounded-pill py-2 shadow-sm"
                 onClick={checkoutHandler}
                 disabled={cartItems.length === 0}
               >

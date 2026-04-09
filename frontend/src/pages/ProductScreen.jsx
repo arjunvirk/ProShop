@@ -61,8 +61,8 @@ const ProductScreen = () => {
   };
 
   return (
-    <>
-      <Link to="/" className="btn btn-light my-3">
+    <section className="fade-in">
+      <Link to="/" className="btn btn-light rounded-pill px-3 my-3">
         Go Back
       </Link>
 
@@ -72,9 +72,9 @@ const ProductScreen = () => {
         <h3>{error}</h3>
       ) : (
         <>
-          <Row>
+          <Row className="g-4">
             <Col md={6}>
-              <Image src={product?.image} fluid />
+              <Image src={product?.image} fluid className="rounded-4 shadow-sm" />
             </Col>
 
             <Col md={3}>
@@ -99,7 +99,7 @@ const ProductScreen = () => {
             </Col>
 
             <Col md={3}>
-              <Card>
+              <Card className="border-0 rounded-4 shadow-sm">
                 <ListGroup variant="flush">
                   <ListGroup.Item>
                     <Row>
@@ -144,7 +144,7 @@ const ProductScreen = () => {
 
                   <ListGroup.Item>
                     <Button
-                      className="btn btn-dark w-100 rounded-0"
+                      className="btn btn-dark w-100 rounded-pill"
                       onClick={addToCartHandler}
                       disabled={product?.countInStocks === 0}
                     >
@@ -156,7 +156,7 @@ const ProductScreen = () => {
             </Col>
           </Row>
 
-          <Row>
+          <Row className="mt-1 mt-md-2">
             <Col md={6}>
               <h2>Reviews</h2>
 
@@ -207,7 +207,7 @@ const ProductScreen = () => {
                         />
                       </Form.Group>
 
-                      <Button type="submit" variant="dark" className="mt-2">
+                      <Button type="submit" variant="dark" className="mt-2 rounded-pill px-4">
                         Submit
                       </Button>
                     </Form>
@@ -223,7 +223,7 @@ const ProductScreen = () => {
           </Row>
         </>
       )}
-    </>
+    </section>
   );
 };
 

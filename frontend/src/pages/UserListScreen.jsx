@@ -37,54 +37,138 @@ const UserListScreen = () => {
 
   return (
     <>
-      <h1 className="my-4">Users</h1>
+      <h1 className="my-3">Users</h1>
+
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <Table striped bordered hover responsive className="table-sm">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>NAME</th>
-              <th>EMAIL</th>
-              <th>ADMIN</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
+        <>
+          {/* ✅ MOBILE VIEW (CARDS) */}
+          <div className="d-md-none">
             {users.map((user) => (
-              <tr key={user._id}>
-                <td>{user._id}</td>
-                <td>{user.name}</td>
-                <td>
-                  <a href={`mailto:${user.email}`}>{user.email}</a>
-                </td>
-                <td>{user.isAdmin ? "🔰" : "❌"}</td>
-                <td>
+              <div
+                key={user._id}
+                className="p-3 mb-3 rounded-4 shadow-sm border bg-white"
+              >
+                <p className="small text-muted mb-1">
+                  ID: {user._id.substring(0, 8)}...
+                </p>
+
+                <h6 className="mb-1">{user.name}</h6>
+
+                <p className="mb-1">
+                  <strong>Email:</strong>{" "}
+                  <a
+                    href={`mailto:${user.email}`}
+                    className="text-decoration-none"
+                  >
+                    {user.email}
+                  </a>
+                </p>
+
+                <p className="mb-2">
+                  <strong>Role:</strong>{" "}
+                  {user.isAdmin ? (
+                    <span className="text-success fw-semibold">Admin</span>
+                  ) : (
+                    <span className="text-muted">User</span>
+                  )}
+                </p>
+
+                <div className="d-flex gap-2">
                   <Button
                     variant="dark"
-                    className="btn-sm"
+                    size="sm"
+                    className="rounded-pill w-50"
                     onClick={() => {
-                      dispatch({ type: USER_DETAILS_RESET }); // 🔥 FIX
+                      dispatch({ type: USER_DETAILS_RESET });
                       navigate(`/admin/user/${user._id}/edit`);
                     }}
                   >
-                    EDIT
+                    Edit
                   </Button>
+
                   <Button
                     variant="danger"
-                    className="btn-sm"
+                    size="sm"
+                    className="rounded-pill w-50"
                     onClick={() => deleteHandler(user._id)}
                   >
-                    DELETE
+                    Delete
                   </Button>
-                </td>
-              </tr>
+                </div>
+              </div>
             ))}
-          </tbody>
-        </Table>
+          </div>
+
+          {/* ✅ DESKTOP TABLE */}
+          <div className="d-none d-md-block">
+            <div className="table-responsive">
+              <Table striped bordered hover className="table-sm align-middle">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Admin</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {users.map((user) => (
+                    <tr key={user._id}>
+                      <td className="small text-muted">
+                        {user._id.substring(0, 8)}...
+                      </td>
+
+                      <td>{user.name}</td>
+
+                      <td>
+                        <a href={`mailto:${user.email}`}>{user.email}</a>
+                      </td>
+
+                      <td>
+                        {user.isAdmin ? (
+                          <span className="text-success">✔</span>
+                        ) : (
+                          <span className="text-danger">✖</span>
+                        )}
+                      </td>
+
+                      <td>
+                        <div className="d-flex gap-1">
+                          <Button
+                            variant="dark"
+                            size="sm"
+                            className="rounded-pill px-3"
+                            onClick={() => {
+                              dispatch({ type: USER_DETAILS_RESET });
+                              navigate(`/admin/user/${user._id}/edit`);
+                            }}
+                          >
+                            Edit
+                          </Button>
+
+                          <Button
+                            variant="danger"
+                            size="sm"
+                            className="rounded-pill px-3"
+                            onClick={() => deleteHandler(user._id)}
+                          >
+                            Delete
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </div>
+          </div>
+        </>
       )}
     </>
   );

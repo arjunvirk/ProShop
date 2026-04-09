@@ -73,68 +73,148 @@ const ProductListScreen = () => {
 
   return (
     <>
-      <Row className="align-items-center">
-        <Col>
-          <h1>Products</h1>
+      <Row className="align-items-center mb-3">
+        <Col xs={6}>
+          <h1 className="h4 mb-0">Products</h1>
         </Col>
-        <Col className="text-right">
-          <Button className="my-3" onClick={createProductHandler}>
-            Create Product
+        <Col xs={6} className="text-end">
+          <Button
+            className="btn-sm rounded-pill px-3"
+            onClick={createProductHandler}
+          >
+            + Create
           </Button>
         </Col>
       </Row>
+
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant="danger">{errorDelete}</Message>}
       {loadingCreate && <Loader />}
       {errorCreate && <Message variant="danger">{errorCreate}</Message>}
+
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
         <>
-          <Table striped bordered hover responsive className="table-sm">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>PRICE</th>
-                <th>CATEGORY</th>
-                <th>BRAND</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {products.map((product) => (
-                <tr key={product._id}>
-                  <td>{product._id}</td>
-                  <td>{product.name}</td>
-                  <td>${product.price}</td>
-                  <td>{product.category}</td>
-                  <td>{product.brand}</td>
-                  <td>
-                    <Button
-                      variant="dark"
-                      className="btn-sm"
-                      onClick={() => {
-                        dispatch({ type: USER_DETAILS_RESET }); // 🔥 FIX
-                        navigate(`/admin/product/${product._id}/edit`);
-                      }}
-                    >
-                      EDIT
-                    </Button>
-                    <Button
-                      variant="danger"
-                      className="btn-sm"
-                      onClick={() => deleteHandler(product._id)}
-                    >
-                      DELETE
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          {/* ✅ MOBILE VIEW (CARDS) */}
+          <div className="d-md-none">
+            {products.map((product) => (
+              <div
+                key={product._id}
+                className="p-3 mb-3 rounded-4 shadow-sm border bg-white"
+              >
+                <p className="small text-muted mb-1">
+                  ID: {product._id.substring(0, 8)}...
+                </p>
+
+                <h6 className="mb-1">{product.name}</h6>
+
+                <p className="mb-1">
+                  <strong>Price:</strong>{" "}
+                  <span className="text-primary fw-semibold">
+                    ${product.price}
+                  </span>
+                </p>
+
+                <p className="mb-1">
+                  <strong>Category:</strong> {product.category}
+                </p>
+
+                <p className="mb-2">
+                  <strong>Brand:</strong> {product.brand}
+                </p>
+
+                <div className="d-flex gap-2">
+                  <Button
+                    variant="dark"
+                    size="sm"
+                    className="rounded-pill w-50"
+                    onClick={() => {
+                      dispatch({ type: USER_DETAILS_RESET });
+                      navigate(`/admin/product/${product._id}/edit`);
+                    }}
+                  >
+                    Edit
+                  </Button>
+
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    className="rounded-pill w-50"
+                    onClick={() => deleteHandler(product._id)}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* ✅ DESKTOP TABLE */}
+          <div className="d-none d-md-block">
+            <div className="table-responsive">
+              <Table striped bordered hover className="table-sm align-middle">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Brand</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {products.map((product) => (
+                    <tr key={product._id}>
+                      <td className="small text-muted">
+                        {product._id.substring(0, 8)}...
+                      </td>
+
+                      <td>{product.name}</td>
+
+                      <td className="fw-semibold text-primary">
+                        ${product.price}
+                      </td>
+
+                      <td>{product.category}</td>
+
+                      <td>{product.brand}</td>
+
+                      <td>
+                        <div className="d-flex gap-1">
+                          <Button
+                            variant="dark"
+                            size="sm"
+                            className="rounded-pill px-3"
+                            onClick={() => {
+                              dispatch({ type: USER_DETAILS_RESET });
+                              navigate(`/admin/product/${product._id}/edit`);
+                            }}
+                          >
+                            Edit
+                          </Button>
+
+                          <Button
+                            variant="danger"
+                            size="sm"
+                            className="rounded-pill px-3"
+                            onClick={() => deleteHandler(product._id)}
+                          >
+                            Delete
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </div>
+          </div>
+
           <Paginate pages={pages} page={page} isAdmin={true} />
         </>
       )}

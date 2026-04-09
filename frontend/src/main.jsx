@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
-import "./index.css";
 import "./assets/bootstrap.min.css";
+import "./index.css";
 import store from "./store.js";
 import { Provider } from "react-redux";
 import App from "./App.jsx";

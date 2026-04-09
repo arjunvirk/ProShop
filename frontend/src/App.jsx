@@ -22,10 +22,10 @@ import OrderListScreen from "./pages/OrderListScreen";
 
 const App = () => {
   return (
-    <div>
+    <div className="app-shell">
       <Header />
-      <Container>
-        <main>
+      <Container className="py-3 py-md-4">
+        <main className="app-main fade-in">
           <Routes>
             {/* USER ROUTES */}
             <Route path="/" element={<HomeScreen />} />

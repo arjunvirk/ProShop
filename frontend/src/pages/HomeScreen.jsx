@@ -20,9 +20,9 @@ const HomeScreen = () => {
   }, [dispatch, keyword, pageNumber]);
 
   return (
-    <>
+    <section className="fade-in">
       {!keyword && <ProductCarousel />}
-      <h1 className="mt-4">LATEST PRODUCTS</h1>
+      <h1 className="section-title mt-2 mt-md-3 mb-3 mb-md-4">LATEST PRODUCTS</h1>
 
       {loading ? (
         <h2>Loading...</h2>
@@ -30,7 +30,7 @@ const HomeScreen = () => {
         <h3>{error}</h3>
       ) : (
         <>
-          <Row>
+          <Row className="g-3 g-md-4">
             {products.map((product) => (
               <Col key={product._id} sm={12} md={6} lg={3}>
                 <Product product={product} />
@@ -45,7 +45,7 @@ const HomeScreen = () => {
           />
         </>
       )}
-    </>
+    </section>
   );
 };
 

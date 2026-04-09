@@ -16,21 +16,26 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar expand="lg" variant="dark" bg="dark">
+      <Navbar expand="lg" className="main-navbar py-2 backdrop-blur">
         <Container>
           <LinkContainer to="/">
-            <Navbar.Brand>PROSHOP</Navbar.Brand>
+            <Navbar.Brand className="fw-bold">
+              PRO<span className="text-white">SHOP</span>
+            </Navbar.Brand>
           </LinkContainer>
 
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
+          <Navbar.Collapse id="basic-navbar-nav" className="mt-3 mt-lg-0">
             <SearchBox />
-            <Nav className="ms-auto">
+            <Nav className="ms-auto align-items-lg-center gap-lg-1">
               <LinkContainer to="/cart">
-                <Nav.Link>CART</Nav.Link>
+                <Nav.Link className="nav-pill text-white">CART</Nav.Link>
               </LinkContainer>
               {userInfo ? (
-                <NavDropdown title={userInfo.name} id="username">
+                <NavDropdown
+                  title={<span className="text-white">{userInfo.name}</span>}
+                  id="username"
+                >
                   <LinkContainer to="/profile">
                     <NavDropdown.Item>PROFILE</NavDropdown.Item>
                   </LinkContainer>
@@ -40,11 +45,11 @@ const Header = () => {
                 </NavDropdown>
               ) : (
                 <LinkContainer to="/login">
-                  <Nav.Link>SIGN IN</Nav.Link>
+                  <Nav.Link className="nav-pill text-white">SIGN IN</Nav.Link>
                 </LinkContainer>
               )}
               {userInfo && userInfo.isAdmin && (
-                <NavDropdown title="Admin" id="adminmenu">
+                <NavDropdown title={<span className="text-white">Admin</span>} id="adminmenu">
                   <LinkContainer to="/admin/userlist">
                     <NavDropdown.Item>Users</NavDropdown.Item>
                   </LinkContainer>

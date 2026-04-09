@@ -131,48 +131,125 @@ const ProfileScreen = () => {
           </Form>
         </Col>
         <Col md={6}>
-          <h2>My Orders</h2>
+          <h2 className="my-3">My Orders</h2>
+
           {loadingOrders ? (
             <Loader />
           ) : errorOrders ? (
             <Message variant="danger">{errorOrders}</Message>
           ) : (
-            <Table striped bordered hover responsive className="table-sm">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>DATE</th>
-                  <th>TOTAL</th>
-                  <th>PAID</th>
-                  <th>DELIVERED</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
+            <>
+              {/* ✅ MOBILE CARDS */}
+              <div className="d-md-none">
                 {orders.map((order) => (
-                  <tr key={order._id}>
-                    <td>{order._id}</td>
-                    <td>{order.createdAt.substring(0, 10)}</td>
-                    <td>{order.totalPrice}</td>
-                    <td>
-                      {order.isPaid ? order.paidAt.substring(0, 10) : "X"}
-                    </td>
-                    <td>
-                      {order.isDelivered
-                        ? order.deliveredAt.substring(0, 10)
-                        : "X"}
-                    </td>
-                    <td>
-                      <LinkContainer to={`/order/${order._id}`}>
-                        <Button variant="dark" className="btn-sm">
-                          Details
-                        </Button>
-                      </LinkContainer>
-                    </td>
-                  </tr>
+                  <div
+                    key={order._id}
+                    className="p-3 mb-3 rounded-4 shadow-sm border bg-white"
+                  >
+                    <p className="small text-muted mb-1">
+                      ID: {order._id.substring(0, 8)}...
+                    </p>
+
+                    <p className="mb-1">
+                      <strong>Date:</strong> {order.createdAt.substring(0, 10)}
+                    </p>
+
+                    <p className="mb-1">
+                      <strong>Total:</strong>{" "}
+                      <span className="text-primary fw-semibold">
+                        ${order.totalPrice}
+                      </span>
+                    </p>
+
+                    <p className="mb-1">
+                      <strong>Paid:</strong> {order.isPaid ? "✅" : "❌"}
+                    </p>
+
+                    <p className="mb-2">
+                      <strong>Delivered:</strong>{" "}
+                      {order.isDelivered ? "🚚" : "❌"}
+                    </p>
+
+                    <LinkContainer to={`/order/${order._id}`}>
+                      <Button
+                        variant="dark"
+                        size="sm"
+                        className="rounded-pill w-100"
+                      >
+                        View Details
+                      </Button>
+                    </LinkContainer>
+                  </div>
                 ))}
-              </tbody>
-            </Table>
+              </div>
+
+              {/* ✅ DESKTOP TABLE */}
+              <div className="d-none d-md-block">
+                <div className="table-responsive">
+                  <Table
+                    striped
+                    bordered
+                    hover
+                    className="table-sm align-middle"
+                  >
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Paid</th>
+                        <th>Delivered</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {orders.map((order) => (
+                        <tr key={order._id}>
+                          <td className="small text-muted">
+                            {order._id.substring(0, 8)}...
+                          </td>
+
+                          <td>{order.createdAt.substring(0, 10)}</td>
+
+                          <td className="fw-semibold text-primary">
+                            ${order.totalPrice}
+                          </td>
+
+                          <td>
+                            {order.isPaid ? (
+                              <span className="text-success">✔</span>
+                            ) : (
+                              <span className="text-danger">✖</span>
+                            )}
+                          </td>
+
+                          <td>
+                            {order.isDelivered ? (
+                              <span className="text-success">✔</span>
+                            ) : (
+                              <span className="text-danger">✖</span>
+                            )}
+                          </td>
+
+                          <td>
+                            <LinkContainer to={`/order/${order._id}`}>
+                              <Button
+                                variant="dark"
+                                size="sm"
+                                className="rounded-pill px-3"
+                              >
+                                Details
+                              </Button>
+                            </LinkContainer>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                </div>
+              </div>
+            </>
           )}
         </Col>
       </Row>
