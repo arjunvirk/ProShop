@@ -2,6 +2,8 @@
 
 A full-stack MERN eCommerce application.
 
+🚀 **Live Demo:** https://proshop-production-0df9.up.railway.app/
+
 ## 🚀 Features
 - User authentication (JWT)
 - Product listing & search
